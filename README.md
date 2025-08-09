@@ -83,3 +83,8 @@ El proyecto incluye configuración para:
 ## 📄 Licencia
 
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
+
+## URL de la API
+La aplicación consume datos de la API oficial de Red Eléctrica de España (REE):
+- [API REE](https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-real?start_date=2025-08-09T00:00&end_date=2025-08-09T23:59&time_trunc=hour)
+- [Documentación de la API](https://www.ree.es/es/datos/apidatos)
