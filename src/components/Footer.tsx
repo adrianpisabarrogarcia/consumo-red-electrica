@@ -13,7 +13,15 @@ function Footer() {
         con mucho 💙
       </p>
       <p className="text-sm text-gray-500">
-        Toma las ideas que necesites, y si te sobran algunas, déjalas aquí 😉
+        Toma las ideas que necesites, y si te sobran algunas,{" "}
+        <a
+          href="https://github.com/adrianpisabarrogarcia/consumo-red-electrica"
+          target="_blank"
+          className="hover:underline"
+        >
+          déjalas aquí
+        </a>{" "}
+        😉
       </p>
     </footer>
   );
