@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import type { classNames } from 'primereact/utils';
 
 export default class PriceTable extends Component {
   products = [
