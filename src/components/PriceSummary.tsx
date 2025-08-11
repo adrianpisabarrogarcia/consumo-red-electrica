@@ -1,11 +1,11 @@
-import { Component } from "react"
-
+import { Component } from "react";
+import { Panel } from "primereact/panel";
 
 export class PriceSummary extends Component {
   render() {
     return (
       <section>
-        <div className="flex">
+        <div className="flex justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -26,13 +26,25 @@ export class PriceSummary extends Component {
           Los precios mostrados están en €/kWh. La franja recomendada se calcula
           buscando el tramo contiguo de 1 hora con menor precio medio.
         </div>
-        <div className="p-4 mt-4 bg-gray-100 rounded-lg">
-          
-
+        <div className="p-4 mt-4 flex flex-row gap-4">
+          <Panel header="Mejor Franja" className="flex-1">
+            <p className="m-0 text-center font-bold text-2xl">02-03 (1 hora)</p>
+            <p className="m-0 text-center text-gray-500">88.80 c€/kWh</p>
+          </Panel>
+          <Panel header="Hora más barata" className="flex-1">
+            <p className="m-0 text-center font-bold text-2xl">02-03</p>
+            <p className="m-0 text-center text-gray-500">0.089 €/kWh</p>
+          </Panel>
+          <Panel header="Precio medio del día" className="flex-1">
+            <p className="m-0 text-center font-bold text-2xl">0.133 €/kWh</p>
+          </Panel>
+          <Panel header="Precio ahora" className="flex-1">
+            <p className="m-0 text-center font-bold text-2xl">0.096 €/kWh</p>
+          </Panel>
         </div>
       </section>
     );
   }
 }
 
-export default PriceSummary
+export default PriceSummary;
