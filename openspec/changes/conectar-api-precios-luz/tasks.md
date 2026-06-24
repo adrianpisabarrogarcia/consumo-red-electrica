@@ -18,8 +18,8 @@
 - [ ] 3.4 Action: Run `git commit -m "feat: implement ree api service with localstorage caching and tests" && git push`.
 
 ## Phase 4: UI Infrastructure & Theme
-- [ ] 4.1 Import the `Outfit` typography from Google Fonts by adding the `<link>` tags in `index.html`.
-- [ ] 4.2 Configure the PrimeReact `lara-dark-blue` theme and override global styles in `src/App.css` using modern dark variables.
+- [x] 4.1 Import the `Outfit` typography from Google Fonts by adding the `<link>` tags in `index.html`.
+- [x] 4.2 Configure the PrimeReact `lara-dark-blue` theme and override global styles in `src/App.css` using modern dark variables.
 - [ ] 4.3 Action: Run `git commit -m "style: import outfit font and configure prime-react dark theme" && git push`.
 
 ## Phase 5: UI Refactoring & Component Integration
