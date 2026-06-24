@@ -34,6 +34,12 @@
 - [x] 6.3 Install `@vitest/coverage-v8` as a devDependency.
 - [x] 6.4 Implement column filters (hour, price, tariff status) in `src/components/PriceTable.tsx` using PrimeReact DataTable filtering features.
 - [x] 6.5 Run unit/integration tests and verify that the production build compiles successfully via `pnpm build`.
-- [ ] 6.6 Action: Run `git commit -m "feat: fix build errors and implement price table filtering" && git push` to consolidate.
+- [x] 6.6 Action: Run `git commit -m "feat: fix build errors and implement price table filtering" && git push` to consolidate.
+
+## Phase 7: Refinamiento de UX de Filtros y Ordenamiento
+- [x] 7.1 Replace the text input filter in the Hour column of `PriceTable.tsx` with a PrimeReact Dropdown containing the 24 formatted hour ranges.
+- [x] 7.2 Remove the text filter from the Price column in `PriceTable.tsx` and enable sorting (`sortable={true}`) on the Price and Hour columns.
+- [x] 7.3 Verify that the TypeScript compilation is clean (`npx tsc --noEmit`) and all 23 tests pass successfully.
+- [ ] 7.4 Action: Run `git commit -m "style: refine price table UX with hour dropdown filter and price sorting" && git push` (To be executed by the main orchestrator).
 
 

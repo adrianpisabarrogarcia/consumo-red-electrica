@@ -17,15 +17,14 @@ interface ProcessedHourlyPrice extends HourlyPrice {
 
 export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) => {
   const [filters, setFilters] = useState<DataTableFilterMeta>({
-    hourStr: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    price: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    hourStr: { value: null, matchMode: FilterMatchMode.EQUALS },
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
 
   // Map prices to processed items adding formatted hourStr and status for native filtering
   const processedPrices: ProcessedHourlyPrice[] = prices.map((p) => {
     const start = String(p.hour).padStart(2, "0");
-    const end = String((p.hour + 1) % 24).padStart(2, "0");
+    const end = p.hour === 23 ? "24" : String(p.hour + 1).padStart(2, "0");
     const hourStr = `${start}:00 - ${end}:00`;
 
     const lowerThreshold = 0.9 * averagePrice;
@@ -88,6 +87,27 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
     }
   };
 
+  // 24 hour ranges array: ['00:00 - 01:00', '01:00 - 02:00', ..., '23:00 - 24:00']
+  const hourRanges = Array.from({ length: 24 }, (_, i) => {
+    const start = String(i).padStart(2, "0");
+    const end = i === 23 ? "24" : String(i + 1).padStart(2, "0");
+    return `${start}:00 - ${end}:00`;
+  });
+
+  const hourFilterElement = (options: ColumnFilterElementTemplateOptions) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={hourRanges}
+        onChange={(e: DropdownChangeEvent) => options.filterCallback(e.value)}
+        placeholder="Todos"
+        className="w-full text-xs"
+        showClear
+        style={{ minWidth: "10rem" }}
+      />
+    );
+  };
+
   const statusFilterElement = (options: ColumnFilterElementTemplateOptions) => {
     return (
       <Dropdown
@@ -129,8 +149,9 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             field="hourStr"
             header="Hora"
             body={hourTemplate}
+            sortable
             filter
-            filterPlaceholder="Filtrar hora"
+            filterElement={hourFilterElement}
             showFilterMenu={false}
             headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
             bodyStyle={{ padding: "1rem 1.5rem" }}
@@ -139,9 +160,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             field="price"
             header="Precio"
             body={priceTemplate}
-            filter
-            filterPlaceholder="Filtrar precio"
-            showFilterMenu={false}
+            sortable
             headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
             bodyStyle={{ padding: "1rem 1.5rem" }}
           />
@@ -149,6 +168,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             field="status"
             header="Estado / Tarifa"
             body={statusTemplate}
+            sortable
             filter
             filterElement={statusFilterElement}
             showFilterMenu={false}
