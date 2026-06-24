@@ -42,14 +42,14 @@ function App() {
     const root = document.documentElement;
     const body = document.body;
 
-    // 1. Toggle dark class and set body colors
+    // 1. Toggle dark class and set body colors (background is handled by the -z-20 div)
     if (theme === "dark") {
       root.classList.add("dark");
-      body.style.backgroundColor = "#0b0f19";
+      body.style.backgroundColor = "transparent";
       body.style.color = "#f3f4f6";
     } else {
       root.classList.remove("dark");
-      body.style.backgroundColor = "#f8fafc";
+      body.style.backgroundColor = "transparent";
       body.style.color = "#0f172a";
     }
 
@@ -174,6 +174,8 @@ function App() {
 
   return (
     <>
+      {/* Background color layer that stays behind the animated particles */}
+      <div className="fixed inset-0 -z-20 bg-[#f8fafc] dark:bg-[#0b0f19] transition-colors duration-500" />
       <AnimatedBackground theme={theme} />
       <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="max-w-7xl mx-auto p-6 space-y-6">

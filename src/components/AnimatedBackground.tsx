@@ -38,12 +38,12 @@ class Particle {
   reset(width: number, height: number, isInitial: boolean, theme: "dark" | "light") {
     this.x = Math.random() * width;
     this.y = isInitial ? Math.random() * height : height + 10;
-    this.size = Math.random() * 2.5 + 1; // particles between 1px and 3.5px
+    this.size = Math.random() * 3.5 + 1.5; // particles between 1.5px and 5px
     
-    // Slow, drifting velocities
-    this.vx = (Math.random() - 0.5) * 0.25;
-    this.vy = -(Math.random() * 0.35 + 0.1); // upwards drift
-    this.alpha = Math.random() * 0.4 + 0.2; // alpha between 0.2 and 0.6
+    // Smooth, dynamic drifting velocities
+    this.vx = (Math.random() - 0.5) * 0.45;
+    this.vy = -(Math.random() * 0.5 + 0.15); // upwards drift
+    this.alpha = Math.random() * 0.5 + 0.35; // alpha between 0.35 and 0.85
     
     const palette = theme === "dark" ? DARK_COLORS : LIGHT_COLORS;
     const color = palette[Math.floor(Math.random() * palette.length)];
@@ -64,6 +64,8 @@ class Particle {
     height: number,
     mouseX: number,
     mouseY: number,
+    mouseVx: number,
+    mouseVy: number,
     theme: "dark" | "light"
   ) {
     // 1. Smoothly interpolate color
@@ -71,30 +73,44 @@ class Particle {
     this.currentColor.g += (this.targetColor.g - this.currentColor.g) * 0.05;
     this.currentColor.b += (this.targetColor.b - this.currentColor.b) * 0.05;
 
-    // 2. Mouse Repulsion Physics
+    // 2. Mouse Attraction and Velocity Sweep Physics
     let forceX = 0;
     let forceY = 0;
-    const dx = this.x - mouseX;
-    const dy = this.y - mouseY;
+    const dx = mouseX - this.x; // points TOWARDS the mouse
+    const dy = mouseY - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
-    const repulsionRadius = 120;
+    const attractionRadius = 220; // Large area of influence
 
-    if (distance < repulsionRadius && distance > 0) {
+    if (distance < attractionRadius && distance > 0) {
       // Stronger force the closer the mouse is
-      const force = (repulsionRadius - distance) / repulsionRadius;
-      const angle = Math.atan2(dy, dx);
-      // Gentle push intensity
-      const strength = 1.2;
-      forceX = Math.cos(angle) * force * strength;
-      forceY = Math.sin(angle) * force * strength;
+      const factor = (attractionRadius - distance) / attractionRadius;
+      
+      // A. Gravitational Attraction (pulls particles to the cursor position)
+      const pullStrength = 0.95;
+      const pullX = (dx / distance) * factor * pullStrength;
+      const pullY = (dy / distance) * factor * pullStrength;
+      
+      // B. Velocity Sweep (sweeps particles in the direction the mouse is moving)
+      const sweepStrength = 0.55;
+      const sweepX = mouseVx * factor * sweepStrength;
+      const sweepY = mouseVy * factor * sweepStrength;
+      
+      forceX = pullX + sweepX;
+      forceY = pullY + sweepY;
     }
 
-    // 3. Move particle with drift + repulsion force
+    // 3. Move particle with drift + mouse forces
     this.x += this.vx + forceX;
     this.y += this.vy + forceY;
 
-    // 4. Boundary check and recycle particles
-    if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+    // C. Soft friction drag when very close to mouse to prevent clumping
+    if (distance < 50) {
+      this.x += (mouseX - this.x) * 0.025;
+      this.y += (mouseY - this.y) * 0.025;
+    }
+
+    // 4. Boundary check and recycle particles (including bottom and top)
+    if (this.y < -10 || this.x < -10 || this.x > width + 10 || this.y > height + 10) {
       this.reset(width, height, false, theme);
     }
   }
@@ -117,7 +133,12 @@ class Particle {
 
 export default function AnimatedBackground({ theme }: AnimatedBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mouseRef = useRef<{ x: number; y: number }>({ x: -1000, y: -1000 });
+  const mouseRef = useRef<{ x: number; y: number; vx: number; vy: number }>({
+    x: -1000,
+    y: -1000,
+    vx: 0,
+    vy: 0,
+  });
   const themeRef = useRef(theme);
 
   // Sync the theme ref when theme changes
@@ -134,7 +155,7 @@ export default function AnimatedBackground({ theme }: AnimatedBackgroundProps) {
 
     let animationFrameId: number;
     const particles: Particle[] = [];
-    const particleCount = 55;
+    const particleCount = 95; // Higher density of stars
 
     // Initialize canvas size
     const resizeCanvas = () => {
@@ -150,15 +171,44 @@ export default function AnimatedBackground({ theme }: AnimatedBackgroundProps) {
       particles.push(new Particle(canvas.width, canvas.height, initialTheme));
     }
 
-    // Mouse move tracking
+    // Mouse move and velocity tracking
+    let lastX = -1000;
+    let lastY = -1000;
+    let lastTime = performance.now();
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      const now = performance.now();
+      const dt = Math.max(1, now - lastTime);
+      lastTime = now;
+
+      let vx = 0;
+      let vy = 0;
+      if (lastX !== -1000) {
+        // Calculate velocity scaled to ~1 frame (16ms)
+        vx = ((e.clientX - lastX) / dt) * 16;
+        vy = ((e.clientY - lastY) / dt) * 16;
+      }
+
+      // Clamp max velocity to prevent crazy speed spikes
+      const maxV = 20;
+      const speed = Math.sqrt(vx * vx + vy * vy);
+      if (speed > maxV) {
+        vx = (vx / speed) * maxV;
+        vy = (vy / speed) * maxV;
+      }
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      mouseRef.current = { x: e.clientX, y: e.clientY, vx, vy };
     };
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Mouse leave tracking to stop repulsion
+    // Mouse leave tracking to stop attraction and clear velocity
     const handleMouseLeave = () => {
-      mouseRef.current = { x: -1000, y: -1000 };
+      mouseRef.current = { x: -1000, y: -1000, vx: 0, vy: 0 };
+      lastX = -1000;
+      lastY = -1000;
     };
     window.addEventListener("mouseleave", handleMouseLeave);
 
@@ -169,6 +219,10 @@ export default function AnimatedBackground({ theme }: AnimatedBackgroundProps) {
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.shadowBlur = 0;
+
+      // Decay mouse velocity slowly so it slows down when mouse stops
+      mouseRef.current.vx *= 0.94;
+      mouseRef.current.vy *= 0.94;
 
       // Check if theme has changed in React state
       const currentTheme = themeRef.current;
@@ -184,6 +238,8 @@ export default function AnimatedBackground({ theme }: AnimatedBackgroundProps) {
           canvas.height,
           mouseRef.current.x,
           mouseRef.current.y,
+          mouseRef.current.vx,
+          mouseRef.current.vy,
           currentTheme
         );
         particle.draw(ctx);
@@ -205,7 +261,7 @@ export default function AnimatedBackground({ theme }: AnimatedBackgroundProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-10 pointer-events-none transition-opacity duration-1000 opacity-60 dark:opacity-35"
+      className="fixed inset-0 -z-10 pointer-events-none transition-opacity duration-1000 opacity-90 dark:opacity-60"
     />
   );
 }
