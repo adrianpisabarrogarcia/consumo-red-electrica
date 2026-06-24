@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Ruta al mapa del sitio
+Sitemap: https://ahorroluz.adrianpisabarro.com/sitemap.xml
