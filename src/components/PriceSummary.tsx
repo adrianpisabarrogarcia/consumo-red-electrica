@@ -1,5 +1,4 @@
 import React from "react";
-import { Panel } from "primereact/panel";
 import { type PriceStats } from "../utils/priceCalculations";
 
 interface PriceSummaryProps {
@@ -62,68 +61,52 @@ export const PriceSummary: React.FC<PriceSummaryProps> = ({ stats }) => {
       {/* Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Card 1: Precio Ahora */}
-        <Panel
-          header={
-            <div className="flex items-center gap-2">
-              <span className="pi pi-clock text-indigo-400"></span>
-              <span className="font-semibold text-slate-200">Precio ahora</span>
-            </div>
-          }
-          className="shadow-md hover:shadow-lg transition-all duration-300 border border-slate-800 bg-slate-950/50 rounded-xl overflow-hidden"
-        >
-          <div className="flex flex-col items-center justify-center py-4">
+        <div className="bg-slate-900/30 border border-slate-800/60 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="pi pi-clock text-indigo-400"></span>
+            <span className="font-semibold text-slate-200">Precio ahora</span>
+          </div>
+          <div className="flex flex-col items-center justify-center py-2">
             <span className="text-3xl font-bold text-slate-100 tracking-tight">{priceNowStr}</span>
             <span className="text-xs text-indigo-400 mt-2 font-medium uppercase tracking-wider">Hora actual</span>
           </div>
-        </Panel>
+        </div>
 
         {/* Card 2: Hora más barata */}
-        <Panel
-          header={
-            <div className="flex items-center gap-2">
-              <span className="pi pi-arrow-down-circle text-emerald-400"></span>
-              <span className="font-semibold text-slate-200">Hora más barata</span>
-            </div>
-          }
-          className="shadow-md hover:shadow-lg transition-all duration-300 border border-slate-800 bg-slate-950/50 rounded-xl overflow-hidden"
-        >
-          <div className="flex flex-col items-center justify-center py-4">
+        <div className="bg-slate-900/30 border border-slate-800/60 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="pi pi-arrow-down-circle text-emerald-400"></span>
+            <span className="font-semibold text-slate-200">Hora más barata</span>
+          </div>
+          <div className="flex flex-col items-center justify-center py-2">
             <span className="text-2xl font-bold text-slate-100 tracking-tight">{cheapestHourStr}</span>
             <span className="text-lg font-semibold text-emerald-400 mt-1">{cheapestPriceStr}</span>
           </div>
-        </Panel>
+        </div>
 
         {/* Card 3: Precio medio del día */}
-        <Panel
-          header={
-            <div className="flex items-center gap-2">
-              <span className="pi pi-chart-bar text-amber-400"></span>
-              <span className="font-semibold text-slate-200">Precio medio del día</span>
-            </div>
-          }
-          className="shadow-md hover:shadow-lg transition-all duration-300 border border-slate-800 bg-slate-950/50 rounded-xl overflow-hidden"
-        >
-          <div className="flex flex-col items-center justify-center py-4">
+        <div className="bg-slate-900/30 border border-slate-800/60 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="pi pi-chart-bar text-amber-400"></span>
+            <span className="font-semibold text-slate-200">Precio medio del día</span>
+          </div>
+          <div className="flex flex-col items-center justify-center py-2">
             <span className="text-3xl font-bold text-slate-100 tracking-tight">{averagePriceStr}</span>
             <span className="text-xs text-amber-400 mt-2 font-medium uppercase tracking-wider">Media aritmética</span>
           </div>
-        </Panel>
+        </div>
 
         {/* Card 4: Mejor Franja (1 hora) */}
-        <Panel
-          header={
-            <div className="flex items-center gap-2">
-              <span className="pi pi-check-circle text-sky-400"></span>
-              <span className="font-semibold text-slate-200">Mejor Franja (1h)</span>
-            </div>
-          }
-          className="shadow-md hover:shadow-lg transition-all duration-300 border border-slate-800 bg-slate-950/50 rounded-xl overflow-hidden"
-        >
-          <div className="flex flex-col items-center justify-center py-4">
+        <div className="bg-slate-900/30 border border-slate-800/60 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="pi pi-check-circle text-sky-400"></span>
+            <span className="font-semibold text-slate-200">Mejor Franja (1h)</span>
+          </div>
+          <div className="flex flex-col items-center justify-center py-2">
             <span className="text-2xl font-bold text-slate-100 tracking-tight">{bestIntervalStr}</span>
             <span className="text-lg font-semibold text-sky-400 mt-1">{bestIntervalPriceStr}</span>
           </div>
-        </Panel>
+        </div>
       </div>
     </section>
   );
