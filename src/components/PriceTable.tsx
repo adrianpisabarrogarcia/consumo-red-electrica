@@ -140,7 +140,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
         <DataTable
           value={processedPrices}
           filters={filters}
-          onFilter={(e) => setFilters(e.filters)}
+          onFilter={(e) => setFilters({ ...e.filters })}
           filterDisplay="row"
           responsiveLayout="scroll"
           className="p-datatable-custom"
