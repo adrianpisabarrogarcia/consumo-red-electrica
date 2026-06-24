@@ -12,9 +12,9 @@
 - [ ] 2.4 Action: Run `git commit -m "test: implement price calculations with 100% test coverage via TDD" && git push`.
 
 ## Phase 3: API Service & Caching
-- [ ] 3.1 Create `src/services/reeApi.ts` to fetch daily PVPC hourly price data from `apidatos.ree.es` following `REQ-API-FETCH`.
-- [ ] 3.2 Implement a robust client-side caching layer in `src/services/reeApi.ts` using `localStorage` to cache daily values under date-based keys (`pvpc-YYYY-MM-DD`).
-- [ ] 3.3 Add unit tests in `src/services/reeApi.test.ts` to mock the API response and verify correct cache write/read and fallback error handling.
+- [x] 3.1 Create `src/services/reeApi.ts` to fetch daily PVPC hourly price data from `apidatos.ree.es` following `REQ-API-FETCH`.
+- [x] 3.2 Implement a robust client-side caching layer in `src/services/reeApi.ts` using `localStorage` to cache daily values under date-based keys (`pvpc-YYYY-MM-DD`).
+- [x] 3.3 Add unit tests in `src/services/reeApi.test.ts` to mock the API response and verify correct cache write/read and fallback error handling.
 - [ ] 3.4 Action: Run `git commit -m "feat: implement ree api service with localstorage caching and tests" && git push`.
 
 ## Phase 4: UI Infrastructure & Theme
