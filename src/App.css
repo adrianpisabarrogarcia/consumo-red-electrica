@@ -13,7 +13,7 @@ body {
 
 /* PrimeReact Dark Theme & Filter Row Overrides */
 .p-datatable .p-datatable-thead > tr.p-filter-row > td {
-  padding: 0.6rem 1rem !important;
+  padding: 0.75rem 1.5rem !important; /* Alineado al milímetro con el padding de 1.5rem de las cabeceras y filas */
   background-color: #0b0f19 !important;
   border-color: #1e293b !important;
 }
