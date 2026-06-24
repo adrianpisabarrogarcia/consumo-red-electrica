@@ -23,7 +23,7 @@
 - [ ] 4.3 Action: Run `git commit -m "style: import outfit font and configure prime-react dark theme" && git push`.
 
 ## Phase 5: UI Refactoring & Component Integration
-- [ ] 5.1 Refactor `src/components/PriceSummary.tsx` to a functional component using modern React 19 hooks and styling card grids with a minimalist dark theme.
-- [ ] 5.2 Refactor `src/components/PriceTable.tsx` to a functional component, rendering a styled PrimeReact DataTable with custom dark borders and Outfit typography.
-- [ ] 5.3 Refactor `src/App.tsx` to a functional component that orchestrates state (prices, loading, errors), fetches data on mount, and handles integration.
+- [x] 5.1 Refactor `src/components/PriceSummary.tsx` to a functional component using modern React 19 hooks and styling card grids with a minimalist dark theme.
+- [x] 5.2 Refactor `src/components/PriceTable.tsx` to a functional component, rendering a styled PrimeReact DataTable with custom dark borders and Outfit typography.
+- [x] 5.3 Refactor `src/App.tsx` to a functional component that orchestrates state (prices, loading, errors), fetches data on mount, and handles integration.
 - [ ] 5.4 Action: Run `git commit -m "feat: refactor UI to functional components and integrate real-time API data" && git push`.
