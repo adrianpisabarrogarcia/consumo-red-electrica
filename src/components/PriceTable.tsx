@@ -50,7 +50,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
   const hourTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
       <div className="flex items-center gap-2 font-medium text-slate-300">
-        <span className="pi pi-calendar-times text-slate-500 text-sm"></span>
+        <span className="pi pi-calendar-times text-slate-500 text-sm hidden sm:inline-block"></span>
         <span>{rowData.hourStr}</span>
       </div>
     );
@@ -59,7 +59,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
   const priceTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
       <span className="font-semibold text-slate-200">
-        {rowData.price.toFixed(4)} €/kWh
+        {rowData.price.toFixed(4)}
       </span>
     );
   };
@@ -69,22 +69,22 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
 
     if (status === "Barata") {
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse hidden sm:inline-block"></span>
           Barata
         </span>
       );
     } else if (status === "Cara") {
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-rose-400 hidden sm:inline-block"></span>
           Cara
         </span>
       );
     } else {
       return (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 hidden sm:inline-block"></span>
           Normal
         </span>
       );
@@ -107,9 +107,8 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
           options.filterApplyCallback(e.value);
         }}
         placeholder="Todos"
-        className="w-full text-xs"
+        className="w-full text-xs min-w-[6.5rem] sm:min-w-[10rem]"
         showClear
-        style={{ minWidth: "10rem" }}
       />
     );
   };
@@ -123,9 +122,8 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
           options.filterApplyCallback(e.value);
         }}
         placeholder="Todos"
-        className="w-full text-xs"
+        className="w-full text-xs min-w-[5.5rem] sm:min-w-[8rem]"
         showClear
-        style={{ minWidth: "8rem" }}
       />
     );
   };
@@ -162,16 +160,14 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             filterMatchMode="equals"
             filterElement={hourFilterElement}
             showFilterMenu={false}
-            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
-            bodyStyle={{ padding: "1rem 1.5rem" }}
+            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600" }}
           />
           <Column
             field="price"
-            header="Precio"
+            header="Precio (€/kWh)"
             body={priceTemplate}
             sortable
-            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
-            bodyStyle={{ padding: "1rem 1.5rem" }}
+            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600" }}
           />
           <Column
             field="status"
@@ -182,8 +178,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             filterMatchMode="equals"
             filterElement={statusFilterElement}
             showFilterMenu={false}
-            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
-            bodyStyle={{ padding: "1rem 1.5rem" }}
+            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600" }}
           />
         </DataTable>
       </div>

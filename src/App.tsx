@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import PriceSummary from "./components/PriceSummary";
+import ApplianceRecommendations from "./components/ApplianceRecommendations";
 import PriceTable from "./components/PriceTable";
 import Footer from "./components/Footer";
 import { fetchHourlyPrices } from "./services/reeApi";
@@ -118,6 +119,7 @@ function App() {
       return (
         <>
           <PriceSummary stats={stats} />
+          <ApplianceRecommendations prices={prices} averagePrice={stats.averagePrice} />
           <PriceTable prices={prices} averagePrice={stats.averagePrice} />
         </>
       );

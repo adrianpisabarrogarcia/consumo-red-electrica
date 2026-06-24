@@ -11,11 +11,29 @@ body {
   margin: 0;
 }
 
-/* PrimeReact Dark Theme & Filter Row Overrides */
+/* PrimeReact Dark Theme & Cell Padding Overrides */
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.4rem 0.5rem !important; /* Ultra-compact padding on mobile */
+  font-size: 0.8rem !important; /* Slightly smaller text on mobile */
+}
+
 .p-datatable .p-datatable-thead > tr.p-filter-row > td {
-  padding: 0.75rem 1.5rem !important; /* Alineado al milímetro con el padding de 1.5rem de las cabeceras y filas */
+  padding: 0.3rem 0.5rem !important; /* Ultra-compact padding for mobile filter row */
   background-color: #0b0f19 !important;
   border-color: #1e293b !important;
+}
+
+@media (min-width: 640px) {
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem 1.5rem !important; /* Standard padding for desktop */
+    font-size: 0.875rem !important; /* Reset to standard text size */
+  }
+
+  .p-datatable .p-datatable-thead > tr.p-filter-row > td {
+    padding: 0.75rem 1.5rem !important; /* Standard padding for desktop filter row */
+  }
 }
 
 /* Dropdown styling */
