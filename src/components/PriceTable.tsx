@@ -21,7 +21,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
 
-  // Map prices to processed items adding formatted hourStr and status for native filtering
+  // Map prices to processed items adding formatted hourStr and status
   const processedPrices = useMemo<ProcessedHourlyPrice[]>(() => {
     return prices.map((p) => {
       const start = String(p.hour).padStart(2, "0");
@@ -44,6 +44,8 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
       };
     });
   }, [prices, averagePrice]);
+
+
 
   const hourTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
@@ -101,7 +103,9 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
       <Dropdown
         value={options.value}
         options={hourRanges}
-        onChange={(e: DropdownChangeEvent) => options.filterCallback(e.value)}
+        onChange={(e: DropdownChangeEvent) => {
+          options.filterApplyCallback(e.value);
+        }}
         placeholder="Todos"
         className="w-full text-xs"
         showClear
@@ -115,7 +119,9 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
       <Dropdown
         value={options.value}
         options={["Barata", "Normal", "Cara"]}
-        onChange={(e: DropdownChangeEvent) => options.filterCallback(e.value)}
+        onChange={(e: DropdownChangeEvent) => {
+          options.filterApplyCallback(e.value);
+        }}
         placeholder="Todos"
         className="w-full text-xs"
         showClear
