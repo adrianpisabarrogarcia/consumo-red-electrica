@@ -1,27 +1,40 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: 'Outfit', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: #0b0f19;
-  color: #f3f4f6;
   min-height: 100vh;
   margin: 0;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* PrimeReact Dark Theme & Cell Padding Overrides */
+/* Custom animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+/* PrimeReact Table Padding Overrides */
 .p-datatable .p-datatable-thead > tr > th,
 .p-datatable .p-datatable-tbody > tr > td {
   padding: 0.4rem 0.5rem !important; /* Ultra-compact padding on mobile */
   font-size: 0.8rem !important; /* Slightly smaller text on mobile */
-}
-
-.p-datatable .p-datatable-thead > tr.p-filter-row > td {
-  padding: 0.3rem 0.5rem !important; /* Ultra-compact padding for mobile filter row */
-  background-color: #0b0f19 !important;
-  border-color: #1e293b !important;
 }
 
 @media (min-width: 640px) {
@@ -30,16 +43,14 @@ body {
     padding: 1rem 1.5rem !important; /* Standard padding for desktop */
     font-size: 0.875rem !important; /* Reset to standard text size */
   }
-
-  .p-datatable .p-datatable-thead > tr.p-filter-row > td {
-    padding: 0.75rem 1.5rem !important; /* Standard padding for desktop filter row */
-  }
 }
 
-/* Dropdown styling */
+/* --- LIGHT MODE DROPDOWN & TABLE STYLING --- */
+
+/* Dropdown styling - Light Mode */
 .p-dropdown {
-  background-color: #111827 !important; /* gray-900 */
-  border: 1px solid #334155 !important; /* slate-700 */
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important; /* slate-300 */
   border-radius: 8px !important;
   width: 100% !important;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -51,27 +62,27 @@ body {
 
 .p-dropdown:not(.p-disabled).p-focus {
   border-color: #4f46e5 !important;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4) !important;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2) !important;
 }
 
 .p-dropdown .p-dropdown-label {
   padding: 0.4rem 0.6rem !important;
-  color: #cbd5e1 !important; /* slate-300 */
+  color: #334155 !important; /* slate-700 */
   font-size: 0.875rem !important; /* text-sm */
   background: transparent !important;
 }
 
 .p-dropdown .p-dropdown-trigger {
-  color: #94a3b8 !important; /* slate-400 */
+  color: #64748b !important; /* slate-500 */
   width: 2.5rem !important;
 }
 
-/* Dropdown Panel Overlay */
+/* Dropdown Panel Overlay - Light Mode */
 .p-dropdown-panel {
-  background-color: #0f172a !important; /* slate-900 */
-  border: 1px solid #334155 !important; /* slate-700 */
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important; /* slate-200 */
   border-radius: 8px !important;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05) !important;
 }
 
 .p-dropdown-panel .p-dropdown-items {
@@ -80,21 +91,79 @@ body {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   padding: 0.5rem 0.75rem !important;
-  color: #cbd5e1 !important; /* slate-300 */
+  color: #334155 !important; /* slate-700 */
   font-size: 0.875rem !important;
   background-color: transparent !important;
   transition: background-color 0.15s, color 0.15s;
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
-  background-color: #1e293b !important; /* slate-800 */
-  color: #f8fafc !important; /* slate-50 */
+  background-color: #f1f5f9 !important; /* slate-100 */
+  color: #0f172a !important; /* slate-900 */
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
   background-color: #4f46e5 !important; /* indigo-600 */
   color: #ffffff !important;
 }
+
+/* Table Filter Cells - Light Mode */
+.p-datatable .p-datatable-thead > tr.p-filter-row > td {
+  padding: 0.3rem 0.5rem !important;
+  background-color: #f8fafc !important; /* slate-50 */
+  border-color: #e2e8f0 !important; /* slate-200 */
+}
+
+@media (min-width: 640px) {
+  .p-datatable .p-datatable-thead > tr.p-filter-row > td {
+    padding: 0.75rem 1.5rem !important;
+  }
+}
+
+/* --- DARK MODE DROPDOWN & TABLE STYLING --- */
+
+/* Dropdown styling - Dark Mode */
+.dark .p-dropdown {
+  background-color: #111827 !important; /* gray-900 */
+  border: 1px solid #334155 !important; /* slate-700 */
+}
+
+.dark .p-dropdown:not(.p-disabled).p-focus {
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4) !important;
+}
+
+.dark .p-dropdown .p-dropdown-label {
+  color: #cbd5e1 !important; /* slate-300 */
+}
+
+.dark .p-dropdown .p-dropdown-trigger {
+  color: #94a3b8 !important; /* slate-400 */
+}
+
+/* Dropdown Panel Overlay - Dark Mode */
+.dark .p-dropdown-panel {
+  background-color: #0f172a !important; /* slate-900 */
+  border: 1px solid #334155 !important; /* slate-700 */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: #cbd5e1 !important; /* slate-300 */
+}
+
+.dark .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+  background-color: #1e293b !important; /* slate-800 */
+  color: #f8fafc !important; /* slate-50 */
+}
+
+/* Table Filter Cells - Dark Mode */
+.dark .p-datatable .p-datatable-thead > tr.p-filter-row > td {
+  background-color: #0b0f19 !important;
+  border-color: #1e293b !important;
+}
+
+
+/* --- SORTING & UTILITIES --- */
 
 /* Separation between column title and sort icon */
 .p-sortable-column .p-sortable-column-icon {

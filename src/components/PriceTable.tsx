@@ -45,12 +45,10 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
     });
   }, [prices, averagePrice]);
 
-
-
   const hourTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
-      <div className="flex items-center gap-2 font-medium text-slate-300">
-        <span className="pi pi-calendar-times text-slate-500 text-sm hidden sm:inline-block"></span>
+      <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-300">
+        <span className="pi pi-calendar-times text-slate-400 dark:text-slate-500 text-sm hidden sm:inline-block"></span>
         <span>{rowData.hourStr}</span>
       </div>
     );
@@ -58,7 +56,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
 
   const priceTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
-      <span className="font-semibold text-slate-200">
+      <span className="font-extrabold text-slate-950 dark:text-slate-200">
         {rowData.price.toFixed(4)}
       </span>
     );
@@ -69,22 +67,22 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
 
     if (status === "Barata") {
       return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse hidden sm:inline-block"></span>
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-extrabold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse hidden sm:inline-block"></span>
           Barata
         </span>
       );
     } else if (status === "Cara") {
       return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-400 hidden sm:inline-block"></span>
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-extrabold bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 dark:bg-rose-400 hidden sm:inline-block"></span>
           Cara
         </span>
       );
     } else {
       return (
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 hidden sm:inline-block"></span>
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:gap-1.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-extrabold bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200/60 dark:border-amber-500/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400 hidden sm:inline-block"></span>
           Normal
         </span>
       );
@@ -129,18 +127,18 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
   };
 
   return (
-    <section className="bg-slate-950/30 border border-slate-800/60 rounded-2xl p-6 space-y-4 shadow-xl">
+    <section className="bg-white dark:bg-slate-950/30 border border-slate-200/80 dark:border-slate-800/60 rounded-2xl p-6 space-y-4 shadow-sm dark:shadow-xl backdrop-blur-md">
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-3">
-          <span className="pi pi-list text-xl text-indigo-400"></span>
+          <span className="pi pi-list text-xl text-indigo-600 dark:text-indigo-400"></span>
           <div>
-            <h2 className="text-xl font-bold text-slate-100 tracking-tight">Precios por horas</h2>
-            <p className="text-xs text-slate-400">Desglose detallado del coste de la luz para las 24 horas del día</p>
+            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">Precios por horas</h2>
+            <p className="text-xs text-slate-750 dark:text-slate-300">Desglose detallado del coste de la luz para las 24 horas del día</p>
           </div>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-800/80 bg-slate-950/50">
+      <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950/50">
         <DataTable
           value={processedPrices}
           filters={filters}
@@ -149,7 +147,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
           responsiveLayout="scroll"
           className="p-datatable-custom"
           emptyMessage="No hay datos de precios disponibles."
-          rowClassName={() => "hover:bg-slate-900/40 transition-colors duration-200 border-b border-slate-900"}
+          rowClassName={() => "hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors duration-200 border-b border-slate-100 dark:border-slate-900"}
         >
           <Column
             field="hourStr"
@@ -160,14 +158,14 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             filterMatchMode="equals"
             filterElement={hourFilterElement}
             showFilterMenu={false}
-            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600" }}
+            headerClassName="bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-slate-400 font-semibold border-b border-slate-200 dark:border-slate-800"
           />
           <Column
             field="price"
             header="Precio (€/kWh)"
             body={priceTemplate}
             sortable
-            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600" }}
+            headerClassName="bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-slate-400 font-semibold border-b border-slate-200 dark:border-slate-800"
           />
           <Column
             field="status"
@@ -178,7 +176,7 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
             filterMatchMode="equals"
             filterElement={statusFilterElement}
             showFilterMenu={false}
-            headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600" }}
+            headerClassName="bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-slate-400 font-semibold border-b border-slate-200 dark:border-slate-800"
           />
         </DataTable>
       </div>

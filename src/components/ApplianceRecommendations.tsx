@@ -71,49 +71,49 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
       name: "Lavadora",
       duration: 2,
       icon: "pi pi-cog",
-      iconBg: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+      iconBg: "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20",
       description: "Ciclo estándar de lavado caliente",
     },
     {
       name: "Lavavajillas",
       duration: 2,
       icon: "pi pi-sync",
-      iconBg: "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20",
+      iconBg: "bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/20",
       description: "Ciclo eco de lavado diario",
     },
     {
       name: "Horno",
       duration: 1,
       icon: "pi pi-database",
-      iconBg: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+      iconBg: "bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20",
       description: "Cocinado o asado a temperatura media",
     },
     {
       name: "Termo Eléctrico",
       duration: 3,
       icon: "pi pi-sliders-h",
-      iconBg: "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20",
+      iconBg: "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20",
       description: "Calentamiento y acumulación de agua",
     },
     {
       name: "Aire Acondicionado",
       duration: 4,
       icon: "pi pi-sun",
-      iconBg: "bg-sky-500/10 text-sky-400 border border-sky-500/20",
+      iconBg: "bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-500/20",
       description: "Climatización continua de confort",
     },
   ];
 
   return (
-    <section className="bg-slate-950/30 border border-slate-800/60 rounded-2xl p-6 space-y-6 shadow-xl">
+    <section className="bg-white dark:bg-slate-950/30 border border-slate-200/80 dark:border-slate-800/60 rounded-2xl p-6 space-y-6 shadow-sm dark:shadow-xl backdrop-blur-md">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <span className="pi pi-bolt text-xl text-indigo-400"></span>
+        <span className="pi pi-bolt text-xl text-indigo-600 dark:text-indigo-400"></span>
         <div>
-          <h2 className="text-xl font-bold text-slate-100 tracking-tight">
+          <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Optimización por Electrodomésticos
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-sm text-slate-700 dark:text-slate-300">
             Recomendaciones de uso inteligente basadas en el precio de la luz de hoy
           </p>
         </div>
@@ -128,7 +128,7 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
             return (
               <div
                 key={appliance.name}
-                className="bg-slate-900/40 border border-slate-800/50 rounded-xl p-5 text-center text-slate-400 text-sm"
+                className="bg-white/75 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/50 rounded-xl p-5 text-center text-slate-700 dark:text-slate-300 text-sm"
               >
                 No hay datos para {appliance.name}
               </div>
@@ -144,7 +144,7 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
           return (
             <div
               key={appliance.name}
-              className="bg-slate-900/40 border border-slate-800/50 rounded-xl p-5 hover:border-slate-700/60 transition-all duration-300 flex flex-col justify-between space-y-4"
+              className="bg-white/80 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-800/50 rounded-xl p-5 hover:border-slate-400/80 dark:hover:border-slate-700/60 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-sm dark:shadow-none"
             >
               <div className="space-y-3">
                 {/* Icon and Name */}
@@ -153,10 +153,10 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
                     <span className={`${appliance.icon} text-lg`}></span>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-200 text-sm sm:text-base">
+                    <h3 className="font-bold text-slate-900 dark:text-slate-200 text-sm sm:text-base">
                       {appliance.name}
                     </h3>
-                    <span className="text-xs text-slate-500 font-medium">
+                    <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                       Duración: {appliance.duration}h
                     </span>
                   </div>
@@ -164,12 +164,12 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
 
                 {/* Slot and Average Price */}
                 <div className="space-y-1 pl-1">
-                  <div className="text-slate-300 font-bold text-base tracking-tight">
+                  <div className="text-slate-900 dark:text-slate-300 font-extrabold text-base tracking-tight">
                     {formatHourSlot(bestWindow.startHour, bestWindow.endHour)}
                   </div>
-                  <div className="text-xs text-slate-400 flex items-center gap-1">
+                  <div className="text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1">
                     <span>Precio medio:</span>
-                    <span className="font-semibold text-indigo-400">
+                    <span className="font-semibold text-indigo-600 dark:text-indigo-400">
                       {bestWindow.averagePrice.toFixed(4)} €/kWh
                     </span>
                   </div>
@@ -177,16 +177,16 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
               </div>
 
               {/* Savings Badge */}
-              <div className="pt-2 border-t border-slate-800/40 flex items-center justify-between">
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold whitespace-nowrap">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800/40 flex items-center justify-between">
+                <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold whitespace-nowrap">
                   Ahorro vs pico
                 </span>
                 {savingsPercent > 0 ? (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/20 whitespace-nowrap">
                     -{savingsPercent}%
                   </span>
                 ) : (
-                  <span className="text-[10px] text-slate-400 font-semibold">0%</span>
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 font-semibold">0%</span>
                 )}
               </div>
             </div>
@@ -197,10 +197,10 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
       {/* Section 2: Semáforo Energético */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
         {/* Cheap Hours column */}
-        <div className="bg-slate-950/40 border border-slate-900 rounded-xl p-4 space-y-3">
-          <div className="flex items-center gap-2 pb-1 border-b border-slate-900">
+        <div className="bg-white/75 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2 pb-1 border-b border-slate-200 dark:border-slate-900">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
-            <h3 className="font-semibold text-sm text-slate-200 uppercase tracking-wider">
+            <h3 className="font-bold text-xs text-slate-700 dark:text-slate-200 uppercase tracking-wider">
               Horas más recomendadas (Baratas)
             </h3>
           </div>
@@ -209,7 +209,7 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
               {cheapRanges.map((range) => (
                 <span
                   key={range}
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/5 text-emerald-400 border border-emerald-500/10 hover:bg-emerald-500/10 transition-colors duration-200"
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-bold bg-emerald-50 dark:bg-emerald-500/5 text-emerald-800 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-500/10 hover:bg-emerald-100 dark:hover:bg-emerald-500/10 transition-colors duration-200"
                 >
                   <span className="pi pi-calendar-times text-[10px]"></span>
                   {range}
@@ -217,15 +217,15 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
               ))}
             </div>
           ) : (
-            <p className="text-xs text-slate-500 italic">No hay horas especialmente baratas hoy.</p>
+            <p className="text-xs text-slate-700 dark:text-slate-300 italic">No hay horas especialmente baratas hoy.</p>
           )}
         </div>
 
         {/* Expensive Hours column */}
-        <div className="bg-slate-950/40 border border-slate-900 rounded-xl p-4 space-y-3">
-          <div className="flex items-center gap-2 pb-1 border-b border-slate-900">
+        <div className="bg-white/75 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-900 rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2 pb-1 border-b border-slate-200 dark:border-slate-900">
             <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm shadow-rose-500/50"></span>
-            <h3 className="font-semibold text-sm text-slate-200 uppercase tracking-wider">
+            <h3 className="font-bold text-xs text-slate-700 dark:text-slate-200 uppercase tracking-wider">
               Horas a evitar (Caras)
             </h3>
           </div>
@@ -234,7 +234,7 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
               {expensiveRanges.map((range) => (
                 <span
                   key={range}
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold bg-rose-500/5 text-rose-400 border border-rose-500/10 hover:bg-rose-500/10 transition-colors duration-200"
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-bold bg-rose-50 dark:bg-rose-500/5 text-rose-800 dark:text-rose-400 border border-rose-200/60 dark:border-rose-500/10 hover:bg-rose-100 dark:hover:bg-rose-500/10 transition-colors duration-200"
                 >
                   <span className="pi pi-exclamation-triangle text-[10px]"></span>
                   {range}
@@ -242,13 +242,13 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
               ))}
             </div>
           ) : (
-            <p className="text-xs text-slate-500 italic">No hay horas especialmente caras hoy.</p>
+            <p className="text-xs text-slate-700 dark:text-slate-300 italic">No hay horas especialmente caras hoy.</p>
           )}
         </div>
       </div>
 
       {/* Section 3: Practical Tip Banner */}
-      <div className="p-4 bg-indigo-500/5 border border-indigo-500/10 rounded-xl flex items-start gap-3">
+      <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/30 rounded-xl flex items-start gap-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="18"
@@ -259,14 +259,14 @@ export const ApplianceRecommendations: React.FC<ApplianceRecommendationsProps> =
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-indigo-400 shrink-0 mt-0.5"
+          className="text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
           <path d="M12 9h.01" />
           <path d="M11 12h1v4h1" />
         </svg>
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-100 leading-relaxed">
           <strong>Consejo:</strong> Programá tus electrodomésticos de alto consumo en las horas baratas. Si usás la lavadora a las 15:00 en lugar de las 21:00, podés ahorrar un gran porcentaje en tu factura.
         </p>
       </div>
