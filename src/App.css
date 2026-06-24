@@ -77,3 +77,30 @@ body {
   background-color: #4f46e5 !important; /* indigo-600 */
   color: #ffffff !important;
 }
+
+/* Separation between column title and sort icon */
+.p-sortable-column .p-sortable-column-icon {
+  margin-left: 0.5rem !important; /* 8px de separación */
+  color: #64748b !important; /* Color slate-500 más suave */
+  font-size: 0.75rem !important; /* Tamaño sutil */
+  transition: color 0.2s;
+}
+
+.p-sortable-column:hover .p-sortable-column-icon {
+  color: #4f46e5 !important; /* Resalta en indigo en hover */
+}
+
+/* Perfect vertical centering for Dropdown clear (X) icon */
+.p-dropdown .p-dropdown-clear-icon {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-top: 0 !important; /* Anula el viejo hack de margin-top negativo del tema */
+  color: #94a3b8 !important; /* Slate-400 sutil */
+  font-size: 0.75rem !important; /* Tamaño sutil de 12px */
+  right: 2.2rem !important; /* Separación de la flecha del selector */
+  transition: color 0.2s;
+}
+
+.p-dropdown .p-dropdown-clear-icon:hover {
+  color: #ef4444 !important; /* Rojo sutil al pasar el mouse para indicar borrado */
+}
