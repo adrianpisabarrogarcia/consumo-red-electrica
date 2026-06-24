@@ -6,9 +6,9 @@
 - [x] 1.3 Action: Run `git commit -m "chore: setup vitest testing infrastructure" && git push` to verify and save the foundation.
 
 ## Phase 2: Price Calculations (TDD)
-- [ ] 2.1 [RED] Create `src/utils/priceCalculations.test.ts` with failing tests for daily average, cheapest hour, current price, and best 1-hour interval, covering all scenarios in `REQ-CALC-*`.
-- [ ] 2.2 [GREEN] Create `src/utils/priceCalculations.ts` implementing the mathematical logic to make all unit tests pass.
-- [ ] 2.3 [REFACTOR] Refactor code for optimization, ensuring 100% test coverage and clean code.
+- [x] 2.1 [RED] Create `src/utils/priceCalculations.test.ts` with failing tests for daily average, cheapest hour, current price, and best 1-hour interval, covering all scenarios in `REQ-CALC-*`.
+- [x] 2.2 [GREEN] Create `src/utils/priceCalculations.ts` implementing the mathematical logic to make all unit tests pass.
+- [x] 2.3 [REFACTOR] Refactor code for optimization, ensuring 100% test coverage and clean code.
 - [ ] 2.4 Action: Run `git commit -m "test: implement price calculations with 100% test coverage via TDD" && git push`.
 
 ## Phase 3: API Service & Caching
