@@ -9,21 +9,31 @@
 - [x] 2.1 [RED] Create `src/utils/priceCalculations.test.ts` with failing tests for daily average, cheapest hour, current price, and best 1-hour interval, covering all scenarios in `REQ-CALC-*`.
 - [x] 2.2 [GREEN] Create `src/utils/priceCalculations.ts` implementing the mathematical logic to make all unit tests pass.
 - [x] 2.3 [REFACTOR] Refactor code for optimization, ensuring 100% test coverage and clean code.
-- [ ] 2.4 Action: Run `git commit -m "test: implement price calculations with 100% test coverage via TDD" && git push`.
+- [x] 2.4 Action: Run `git commit -m "test: implement price calculations with 100% test coverage via TDD" && git push`.
 
 ## Phase 3: API Service & Caching
 - [x] 3.1 Create `src/services/reeApi.ts` to fetch daily PVPC hourly price data from `apidatos.ree.es` following `REQ-API-FETCH`.
 - [x] 3.2 Implement a robust client-side caching layer in `src/services/reeApi.ts` using `localStorage` to cache daily values under date-based keys (`pvpc-YYYY-MM-DD`).
 - [x] 3.3 Add unit tests in `src/services/reeApi.test.ts` to mock the API response and verify correct cache write/read and fallback error handling.
-- [ ] 3.4 Action: Run `git commit -m "feat: implement ree api service with localstorage caching and tests" && git push`.
+- [x] 3.4 Action: Run `git commit -m "feat: implement ree api service with localstorage caching and tests" && git push`.
 
 ## Phase 4: UI Infrastructure & Theme
 - [x] 4.1 Import the `Outfit` typography from Google Fonts by adding the `<link>` tags in `index.html`.
 - [x] 4.2 Configure the PrimeReact `lara-dark-blue` theme and override global styles in `src/App.css` using modern dark variables.
-- [ ] 4.3 Action: Run `git commit -m "style: import outfit font and configure prime-react dark theme" && git push`.
+- [x] 4.3 Action: Run `git commit -m "style: import outfit font and configure prime-react dark theme" && git push`.
 
 ## Phase 5: UI Refactoring & Component Integration
 - [x] 5.1 Refactor `src/components/PriceSummary.tsx` to a functional component using modern React 19 hooks and styling card grids with a minimalist dark theme.
 - [x] 5.2 Refactor `src/components/PriceTable.tsx` to a functional component, rendering a styled PrimeReact DataTable with custom dark borders and Outfit typography.
 - [x] 5.3 Refactor `src/App.tsx` to a functional component that orchestrates state (prices, loading, errors), fetches data on mount, and handles integration.
-- [ ] 5.4 Action: Run `git commit -m "feat: refactor UI to functional components and integrate real-time API data" && git push`.
+- [x] 5.4 Action: Run `git commit -m "feat: refactor UI to functional components and integrate real-time API data" && git push`.
+
+## Phase 6: Build Fixes & Table Filtering
+- [x] 6.1 Export the `PriceStats` interface in `src/utils/priceCalculations.ts`.
+- [x] 6.2 Change `defineConfig` import in `vite.config.ts` to `'vitest/config'`.
+- [x] 6.3 Install `@vitest/coverage-v8` as a devDependency.
+- [x] 6.4 Implement column filters (hour, price, tariff status) in `src/components/PriceTable.tsx` using PrimeReact DataTable filtering features.
+- [x] 6.5 Run unit/integration tests and verify that the production build compiles successfully via `pnpm build`.
+- [ ] 6.6 Action: Run `git commit -m "feat: fix build errors and implement price table filtering" && git push` to consolidate.
+
+

@@ -4,6 +4,14 @@ export interface HourlyPrice {
   datetime: string;    // Original ISO string
 }
 
+export interface PriceStats {
+  averagePrice: number;
+  cheapestHour: { hour: number; price: number } | null;
+  currentPrice: number | null;
+  bestInterval: { startHour: number; endHour: number; averagePrice: number } | null;
+}
+
+
 /**
  * Calculates the arithmetic mean of all hourly prices of the day.
  * Returns 0 if the array is empty, null, or undefined.

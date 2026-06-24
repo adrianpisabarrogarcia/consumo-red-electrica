@@ -1,26 +1,59 @@
-import React from "react";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import React, { useState } from "react";
+import { DataTable, type DataTableFilterMeta } from "primereact/datatable";
+import { Column, type ColumnFilterElementTemplateOptions } from "primereact/column";
 import { type HourlyPrice } from "../utils/priceCalculations";
+import { FilterMatchMode } from "primereact/api";
+import { Dropdown, type DropdownChangeEvent } from "primereact/dropdown";
 
 interface PriceTableProps {
   prices: HourlyPrice[];
   averagePrice: number;
 }
 
+interface ProcessedHourlyPrice extends HourlyPrice {
+  hourStr: string;
+  status: "Barata" | "Normal" | "Cara";
+}
+
 export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) => {
-  const hourTemplate = (rowData: HourlyPrice) => {
-    const start = String(rowData.hour).padStart(2, "0");
-    const end = String((rowData.hour + 1) % 24).padStart(2, "0");
+  const [filters, setFilters] = useState<DataTableFilterMeta>({
+    hourStr: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    price: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  });
+
+  // Map prices to processed items adding formatted hourStr and status for native filtering
+  const processedPrices: ProcessedHourlyPrice[] = prices.map((p) => {
+    const start = String(p.hour).padStart(2, "0");
+    const end = String((p.hour + 1) % 24).padStart(2, "0");
+    const hourStr = `${start}:00 - ${end}:00`;
+
+    const lowerThreshold = 0.9 * averagePrice;
+    const upperThreshold = 1.1 * averagePrice;
+    let status: "Barata" | "Normal" | "Cara" = "Normal";
+    if (p.price < lowerThreshold) {
+      status = "Barata";
+    } else if (p.price > upperThreshold) {
+      status = "Cara";
+    }
+
+    return {
+      ...p,
+      hourStr,
+      status,
+    };
+  });
+
+  const hourTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
       <div className="flex items-center gap-2 font-medium text-slate-300">
         <span className="pi pi-calendar-times text-slate-500 text-sm"></span>
-        <span>{start}:00 - {end}:00</span>
+        <span>{rowData.hourStr}</span>
       </div>
     );
   };
 
-  const priceTemplate = (rowData: HourlyPrice) => {
+  const priceTemplate = (rowData: ProcessedHourlyPrice) => {
     return (
       <span className="font-semibold text-slate-200">
         {rowData.price.toFixed(4)} €/kWh
@@ -28,19 +61,17 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
     );
   };
 
-  const statusTemplate = (rowData: HourlyPrice) => {
-    const price = rowData.price;
-    const lowerThreshold = 0.9 * averagePrice;
-    const upperThreshold = 1.1 * averagePrice;
+  const statusTemplate = (rowData: ProcessedHourlyPrice) => {
+    const status = rowData.status;
 
-    if (price < lowerThreshold) {
+    if (status === "Barata") {
       return (
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           Barata
         </span>
       );
-    } else if (price > upperThreshold) {
+    } else if (status === "Cara") {
       return (
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
           <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
@@ -57,6 +88,20 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
     }
   };
 
+  const statusFilterElement = (options: ColumnFilterElementTemplateOptions) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={["Barata", "Normal", "Cara"]}
+        onChange={(e: DropdownChangeEvent) => options.filterCallback(e.value)}
+        placeholder="Todos"
+        className="w-full text-xs"
+        showClear
+        style={{ minWidth: "8rem" }}
+      />
+    );
+  };
+
   return (
     <section className="bg-slate-950/30 border border-slate-800/60 rounded-2xl p-6 space-y-4 shadow-xl">
       <div className="flex items-center justify-between px-2">
@@ -71,27 +116,42 @@ export const PriceTable: React.FC<PriceTableProps> = ({ prices, averagePrice }) 
 
       <div className="overflow-hidden rounded-xl border border-slate-800/80 bg-slate-950/50">
         <DataTable
-          value={prices}
+          value={processedPrices}
+          filters={filters}
+          onFilter={(e) => setFilters(e.filters)}
+          filterDisplay="row"
           responsiveLayout="scroll"
           className="p-datatable-custom"
           emptyMessage="No hay datos de precios disponibles."
           rowClassName={() => "hover:bg-slate-900/40 transition-colors duration-200 border-b border-slate-900"}
         >
           <Column
+            field="hourStr"
             header="Hora"
             body={hourTemplate}
+            filter
+            filterPlaceholder="Filtrar hora"
+            showFilterMenu={false}
             headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
             bodyStyle={{ padding: "1rem 1.5rem" }}
           />
           <Column
+            field="price"
             header="Precio"
             body={priceTemplate}
+            filter
+            filterPlaceholder="Filtrar precio"
+            showFilterMenu={false}
             headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
             bodyStyle={{ padding: "1rem 1.5rem" }}
           />
           <Column
+            field="status"
             header="Estado / Tarifa"
             body={statusTemplate}
+            filter
+            filterElement={statusFilterElement}
+            showFilterMenu={false}
             headerStyle={{ backgroundColor: "rgba(15, 23, 42, 0.6)", color: "#94a3b8", fontWeight: "600", padding: "1rem 1.5rem" }}
             bodyStyle={{ padding: "1rem 1.5rem" }}
           />

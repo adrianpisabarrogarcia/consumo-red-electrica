@@ -26,7 +26,7 @@ function extractHour(datetimeStr: string): number {
         }
       }
     }
-  } catch (e) {
+  } catch {
     // Ignore and fallback to Date parse
   }
   return new Date(datetimeStr).getHours();
@@ -78,7 +78,7 @@ export async function fetchHourlyPrices(dateInput?: Date | string): Promise<Hour
         if (Array.isArray(parsed) && parsed.length > 0) {
           return parsed;
         }
-      } catch (e) {
+      } catch {
         // Cache is corrupt, proceed to fetch fresh data
       }
     }
