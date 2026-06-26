@@ -1,4 +1,4 @@
-import { type HourlyPrice } from './priceCalculations';
+import { type HourlyPrice } from '../../prices/utils/priceCalculations';
 export type { HourlyPrice };
 
 export interface BestWindow {

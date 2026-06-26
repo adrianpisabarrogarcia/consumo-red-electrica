@@ -3,7 +3,7 @@ import {
   findBestWindowForAppliance,
   categorizeHours,
   type HourlyPrice
-} from './applianceRecommendations';
+} from './applianceCalculations';
 
 // Mock 24-hour price data
 const mock24hPrices: HourlyPrice[] = [

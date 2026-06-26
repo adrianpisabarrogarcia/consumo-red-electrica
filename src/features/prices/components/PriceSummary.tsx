@@ -1,5 +1,5 @@
 import React from "react";
-import { type PriceStats } from "../utils/priceCalculations";
+import { type PriceStats, classifyPrice } from "../utils/priceCalculations";
 
 interface PriceSummaryProps {
   stats: PriceStats;
@@ -9,6 +9,24 @@ const formatHourSlot = (hour: number) => {
   const start = String(hour).padStart(2, "0");
   const end = String((hour + 1) % 24).padStart(2, "0");
   return `${start}:00 - ${end}:00`;
+};
+
+const badgeStyles = {
+  cheap: {
+    label: "Barata",
+    class: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800/30",
+    dotClass: "bg-emerald-500",
+  },
+  normal: {
+    label: "Normal",
+    class: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800/30",
+    dotClass: "bg-amber-500",
+  },
+  expensive: {
+    label: "Cara",
+    class: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-800/30",
+    dotClass: "bg-rose-500",
+  },
 };
 
 export const PriceSummary: React.FC<PriceSummaryProps> = ({ stats }) => {
@@ -31,6 +49,12 @@ export const PriceSummary: React.FC<PriceSummaryProps> = ({ stats }) => {
   const bestIntervalPriceStr = bestInterval
     ? `${bestInterval.averagePrice.toFixed(3)} €/kWh`
     : "N/A";
+
+  // Calculate the price classification if both currentPrice and averagePrice are available
+  const classification =
+    currentPrice !== null && averagePrice !== null
+      ? classifyPrice(currentPrice, averagePrice)
+      : null;
 
   return (
     <section className="space-y-6">
@@ -66,9 +90,15 @@ export const PriceSummary: React.FC<PriceSummaryProps> = ({ stats }) => {
             <span className="pi pi-clock text-indigo-600 dark:text-indigo-400"></span>
             <span className="font-bold text-slate-700 dark:text-slate-200 text-sm">Precio ahora</span>
           </div>
-          <div className="flex flex-col items-center justify-center py-2">
+          <div className="flex flex-col items-center justify-center py-2 gap-2">
             <span className="text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">{priceNowStr}</span>
-            <span className="text-xs text-indigo-600 dark:text-indigo-400 mt-2 font-semibold uppercase tracking-wider">Hora actual</span>
+            {classification && (
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badgeStyles[classification].class}`}>
+                <span className={`h-1.5 w-1.5 rounded-full ${badgeStyles[classification].dotClass}`} />
+                {badgeStyles[classification].label}
+              </span>
+            )}
+            <span className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider">Hora actual</span>
           </div>
         </div>
 

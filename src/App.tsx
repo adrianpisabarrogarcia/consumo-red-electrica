@@ -1,103 +1,17 @@
-import { useState, useEffect } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import PriceSummary from "./components/PriceSummary";
-import ApplianceRecommendations from "./components/ApplianceRecommendations";
-import PriceTable from "./components/PriceTable";
-import Footer from "./components/Footer";
-import AnimatedBackground from "./components/AnimatedBackground";
-import { fetchHourlyPrices } from "./services/reeApi";
-import {
-  calculateAveragePrice,
-  findCheapestHour,
-  findCurrentPrice,
-  findBestInterval,
-  type HourlyPrice,
-  type PriceStats,
-} from "./utils/priceCalculations";
+import Header from "./core/layout/Header";
+import Footer from "./core/layout/Footer";
+import AnimatedBackground from "./features/theme/components/AnimatedBackground";
+import { useTheme } from "./features/theme/hooks/useTheme";
+import { usePvpcData } from "./features/prices/hooks/usePvpcData";
+import PriceSummary from "./features/prices/components/PriceSummary";
+import ApplianceRecommendations from "./features/appliances/components/ApplianceRecommendations";
+import PriceTable from "./features/prices/components/PriceTable";
 import { Skeleton } from "primereact/skeleton";
 
-// Import PrimeReact themes dynamically using Vite's inline css suffix
-import darkTheme from "primereact/resources/themes/lara-dark-blue/theme.css?inline";
-import lightTheme from "primereact/resources/themes/lara-light-blue/theme.css?inline";
-
 function App() {
-  const [prices, setPrices] = useState<HourlyPrice[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [stats, setStats] = useState<PriceStats | null>(null);
-
-  // Theme state: initialized from localStorage, defaulting to 'dark'
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    const saved = localStorage.getItem("theme");
-    return saved === "light" || saved === "dark" ? saved : "dark";
-  });
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
-  // Synchronize theme styles and classes in a side-effect
-  useEffect(() => {
-    const root = document.documentElement;
-    const body = document.body;
-
-    // 1. Toggle dark class and set body colors (background is handled by the -z-20 div)
-    if (theme === "dark") {
-      root.classList.add("dark");
-      body.style.backgroundColor = "transparent";
-      body.style.color = "#f3f4f6";
-    } else {
-      root.classList.remove("dark");
-      body.style.backgroundColor = "transparent";
-      body.style.color = "#0f172a";
-    }
-
-    // 2. Swapping PrimeReact stylesheet strings
-    let styleTag = document.getElementById("primereact-theme") as HTMLStyleElement;
-    if (!styleTag) {
-      styleTag = document.createElement("style");
-      styleTag.id = "primereact-theme";
-      document.head.appendChild(styleTag);
-    }
-    styleTag.textContent = theme === "dark" ? darkTheme : lightTheme;
-
-    // 3. Persist theme preference in localStorage
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const loadData = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await fetchHourlyPrices();
-      
-      const average = calculateAveragePrice(data);
-      const cheapest = findCheapestHour(data);
-      const currentHour = new Date().getHours();
-      const currentPrice = findCurrentPrice(data, currentHour);
-      const bestInterval = findBestInterval(data);
-
-      const calculatedStats: PriceStats = {
-        averagePrice: average,
-        cheapestHour: cheapest,
-        currentPrice: currentPrice,
-        bestInterval: bestInterval,
-      };
-
-      setPrices(data);
-      setStats(calculatedStats);
-    } catch (err) {
-      console.error(err);
-      setError(err instanceof Error ? err.message : "Error desconocido al obtener datos.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
+  const { theme, toggleTheme } = useTheme();
+  const { prices, stats, loading, error, refetch } = usePvpcData();
 
   const renderContent = () => {
     if (loading) {
@@ -149,7 +63,7 @@ function App() {
             <p className="text-sm text-slate-700 dark:text-slate-300 max-w-md">{error}</p>
           </div>
           <button
-            onClick={loadData}
+            onClick={refetch}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-colors duration-200 shadow-md shadow-indigo-600/20 active:scale-95 cursor-pointer animate-pulse"
           >
             <span className="pi pi-refresh text-xs"></span>

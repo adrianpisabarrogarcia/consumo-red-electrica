@@ -11,7 +11,6 @@ export interface PriceStats {
   bestInterval: { startHour: number; endHour: number; averagePrice: number } | null;
 }
 
-
 /**
  * Calculates the arithmetic mean of all hourly prices of the day.
  * Returns 0 if the array is empty, null, or undefined.
@@ -80,4 +79,22 @@ export function findBestInterval(prices: HourlyPrice[]): { startHour: number; en
     endHour: cheapest.hour + 1,
     averagePrice: cheapest.price,
   };
+}
+
+/**
+ * Categorizes whether a price is cheap, normal, or expensive relative to the daily average.
+ * - "cheap": price < 90% of the average
+ * - "expensive": price > 110% of the average
+ * - "normal": otherwise
+ */
+export function classifyPrice(price: number, averagePrice: number): "cheap" | "normal" | "expensive" {
+  const lowerThreshold = averagePrice * 0.9;
+  const upperThreshold = averagePrice * 1.1;
+  if (price < lowerThreshold) {
+    return "cheap";
+  }
+  if (price > upperThreshold) {
+    return "expensive";
+  }
+  return "normal";
 }
